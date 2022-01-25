@@ -1,4 +1,4 @@
-package Tricks;
+package tricks;
 
 import java.util.function.Function;
 
