@@ -1,4 +1,4 @@
-package optionals;
+package tricks;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -10,7 +10,7 @@ public final class HelperFunctions {
 
 //    Usage example
 //    getOptionalObject()
-//            .map(doing(System.out::println))
-//            .map(doing(name -> invokeImportantHttpPostRequest(x)))
+//            .map(peek(System.out::println))
+//            .map(peek(name -> invokeImportantHttpPostRequest(x)))
 //            .map(String::length);
 }
