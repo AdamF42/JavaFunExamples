@@ -1,6 +1,7 @@
-package monads.reasultorerror;
+package reasultorerror;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ResultOrError<R, E> {
 
@@ -28,13 +29,32 @@ public class ResultOrError<R, E> {
 
     public boolean isError() { return error != null; }
 
-    public <R2> ResultOrError<R2,E> bind ( Function<R, ResultOrError<R2,E>> function ) {
+    /**
+     * If a result is present, apply the provided ResultOrError-bearing mapping function to it, return that result,
+     * otherwise return an error ResultOrError.
+     * @param function
+     * @param <R2>
+     * @return
+     */
+    public <R2> ResultOrError<R2,E> flatMap(Function<R, ResultOrError<R2,E>> function ) {
 
         if ( isResult() ) {
             return function.apply ( result );
         } else {
             return createError ( error );
         }
+    }
+
+    /**
+     * Return the result if present, otherwise invoke other and return the result of that invocation.
+     * @param other
+     * @return
+     */
+    public R orElseGet(Supplier<? extends R> other) {
+        if (this.isResult()) {
+            return this.getResult();
+        }
+        return other.get();
     }
 
     public String toString() {

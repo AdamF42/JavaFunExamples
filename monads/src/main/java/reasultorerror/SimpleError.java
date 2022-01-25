@@ -1,4 +1,4 @@
-package monads.reasultorerror;
+package reasultorerror;
 
 public class SimpleError {
 

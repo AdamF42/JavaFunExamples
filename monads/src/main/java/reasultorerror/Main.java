@@ -2,58 +2,58 @@ package reasultorerror;
 
 public class Main {
 
-    public static monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> trim(String string) {
+    public static ResultOrError<String, SimpleError> trim(String string) {
 
         String r = string.trim();
         if (!r.isEmpty()) {
-            return monads.reasultorerror.ResultOrError.createResult(r);
+            return ResultOrError.createResult(r);
         } else {
-            return monads.reasultorerror.ResultOrError.createError(new monads.reasultorerror.SimpleError("String must contain non-space characters."));
+            return ResultOrError.createError(new SimpleError("String must contain non-space characters."));
         }
     }
 
-    public static monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> toUpperCase(String string) {
+    public static ResultOrError<String, SimpleError> toUpperCase(String string) {
 
         if (!string.matches("[a-zA-Z ]+")) {
-            return monads.reasultorerror.ResultOrError.createError(new monads.reasultorerror.SimpleError("String must contain only letters."));
+            return ResultOrError.createError(new SimpleError("String must contain only letters."));
         }
 
-        return monads.reasultorerror.ResultOrError.createResult(string.toUpperCase());
+        return ResultOrError.createResult(string.toUpperCase());
     }
 
-    public static monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> appendExclam(String string) {
+    public static ResultOrError<String, SimpleError> appendExclam(String string) {
 
         if (string.length() > 20) {
-            return monads.reasultorerror.ResultOrError.createError(new monads.reasultorerror.SimpleError("String must not exceed 20 characters."));
+            return ResultOrError.createError(new SimpleError("String must not exceed 20 characters."));
         }
 
-        return monads.reasultorerror.ResultOrError.createResult(string.concat("!"));
+        return ResultOrError.createResult(string.concat("!"));
     }
 
-    static monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> enthuse_1(String sentence) {
+    static ResultOrError<String, SimpleError> enthuse_1(String sentence) {
 
-        monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> trimmed = trim(sentence);
-        monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> upperCased = trimmed.bind(Main::toUpperCase);
-        monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> result = upperCased.bind(Main::appendExclam);
+        ResultOrError<String, SimpleError> trimmed = trim(sentence);
+        ResultOrError<String, SimpleError> upperCased = trimmed.flatMap(Main::toUpperCase);
+        ResultOrError<String, SimpleError> result = upperCased.flatMap(Main::appendExclam);
 
         return result;
     }
 
-    static monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> enthuse_2(String sentence) {
+    static ResultOrError<String, SimpleError> enthuse_2(String sentence) {
 
-        monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> trimmed = trim(sentence);
-        monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> upperCased = trimmed.bind(Main::toUpperCase);
-        return upperCased.bind(Main::appendExclam);
+        ResultOrError<String, SimpleError> trimmed = trim(sentence);
+        ResultOrError<String, SimpleError> upperCased = trimmed.flatMap(Main::toUpperCase);
+        return upperCased.flatMap(Main::appendExclam);
     }
 
-    static monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> enthuse_3(String sentence) {
+    static ResultOrError<String, SimpleError> enthuse_3(String sentence) {
 
-        return trim(sentence).bind(Main::toUpperCase).bind(Main::appendExclam);
+        return trim(sentence).flatMap(Main::toUpperCase).flatMap(Main::appendExclam);
     }
 
-    static monads.reasultorerror.ResultOrError<String, monads.reasultorerror.SimpleError> enthuse_4(String sentence) {
+    static ResultOrError<String, SimpleError> enthuse_4(String sentence) {
 
-        return trim(sentence).bind(Main::toUpperCase).bind(Main::appendExclam);
+        return trim(sentence).flatMap(Main::toUpperCase).flatMap(Main::appendExclam);
     }
 
     private static void test(String sentence) {
