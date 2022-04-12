@@ -2,56 +2,56 @@ package reasultorerror;
 
 public class Main {
 
-    public static ResultOrError<String, SimpleError> trim(String string) {
+    public static Either<String, SimpleError> trim(String string) {
 
         String r = string.trim();
         if (!r.isEmpty()) {
-            return ResultOrError.createResult(r);
+            return Either.createResult(r);
         } else {
-            return ResultOrError.createError(new SimpleError("String must contain non-space characters."));
+            return Either.createError(new SimpleError("String must contain non-space characters."));
         }
     }
 
-    public static ResultOrError<String, SimpleError> toUpperCase(String string) {
+    public static Either<String, SimpleError> toUpperCase(String string) {
 
         if (!string.matches("[a-zA-Z ]+")) {
-            return ResultOrError.createError(new SimpleError("String must contain only letters."));
+            return Either.createError(new SimpleError("String must contain only letters."));
         }
 
-        return ResultOrError.createResult(string.toUpperCase());
+        return Either.createResult(string.toUpperCase());
     }
 
-    public static ResultOrError<String, SimpleError> appendExclam(String string) {
+    public static Either<String, SimpleError> appendExclam(String string) {
 
         if (string.length() > 20) {
-            return ResultOrError.createError(new SimpleError("String must not exceed 20 characters."));
+            return Either.createError(new SimpleError("String must not exceed 20 characters."));
         }
 
-        return ResultOrError.createResult(string.concat("!"));
+        return Either.createResult(string.concat("!"));
     }
 
-    static ResultOrError<String, SimpleError> enthuse_1(String sentence) {
+    static Either<String, SimpleError> enthuse_1(String sentence) {
 
-        ResultOrError<String, SimpleError> trimmed = trim(sentence);
-        ResultOrError<String, SimpleError> upperCased = trimmed.flatMap(Main::toUpperCase);
-        ResultOrError<String, SimpleError> result = upperCased.flatMap(Main::appendExclam);
+        Either<String, SimpleError> trimmed = trim(sentence);
+        Either<String, SimpleError> upperCased = trimmed.flatMap(Main::toUpperCase);
+        Either<String, SimpleError> result = upperCased.flatMap(Main::appendExclam);
 
         return result;
     }
 
-    static ResultOrError<String, SimpleError> enthuse_2(String sentence) {
+    static Either<String, SimpleError> enthuse_2(String sentence) {
 
-        ResultOrError<String, SimpleError> trimmed = trim(sentence);
-        ResultOrError<String, SimpleError> upperCased = trimmed.flatMap(Main::toUpperCase);
+        Either<String, SimpleError> trimmed = trim(sentence);
+        Either<String, SimpleError> upperCased = trimmed.flatMap(Main::toUpperCase);
         return upperCased.flatMap(Main::appendExclam);
     }
 
-    static ResultOrError<String, SimpleError> enthuse_3(String sentence) {
+    static Either<String, SimpleError> enthuse_3(String sentence) {
 
         return trim(sentence).flatMap(Main::toUpperCase).flatMap(Main::appendExclam);
     }
 
-    static ResultOrError<String, SimpleError> enthuse_4(String sentence) {
+    static Either<String, SimpleError> enthuse_4(String sentence) {
 
         return trim(sentence).flatMap(Main::toUpperCase).flatMap(Main::appendExclam);
     }
